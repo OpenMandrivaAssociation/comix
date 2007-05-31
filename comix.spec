@@ -1,5 +1,5 @@
 %define name comix
-%define version 3.6.3
+%define version 3.6.4
 %define summary Comic book viewer
 %define title Comix
 
