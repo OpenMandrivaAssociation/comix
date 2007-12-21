@@ -12,6 +12,7 @@ Group: Office
 URL: http://comix.sourceforge.net/
 Source: http://dl.sf.net/comix/comix-%{version}.tar.bz2
 Source1: %name-icons.tar.bz2
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Buildarch: noarch
 BuildRequires: python, python-imaging, jpeg-progs, pygtk2.0
