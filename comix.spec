@@ -1,24 +1,23 @@
 %define name comix
-%define version 3.6.4
+%define version 4.0.0
 %define summary Comic book viewer
-%define title Comix
 
 Summary: %summary
 Name: %name
 Version: %version
-Release: %mkrel 3
-License: GPL
+Release: %mkrel 1
+License: GPLv2+
 Group: Office
 URL: http://comix.sourceforge.net/
-Source: http://dl.sf.net/comix/comix-%{version}.tar.bz2
+Source: http://downloads.sourceforge.net/comix/%name-%{version}.tar.gz
 Source1: %name-icons.tar.bz2
+Patch0: comix-4.0.0-disable-update-mime-db.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Buildarch: noarch
 BuildRequires: python, python-imaging, jpeg-progs, pygtk2.0
+BuildRequires: desktop-file-utils
 Requires: python, python-imaging, jpeg-progs, pygtk2.0
-Requires(post): desktop-file-utils
-Requires(postun): desktop-file-utils
 
 
 %description
@@ -27,32 +26,22 @@ archives (often called .cbz, .cbr and .cbt) as well as normal image files.
 
 %prep
 %setup -q -n %{name}-%{version} -a1
+%patch0 -p0
 
 %build
 
 %install
 %{__rm} -rf %{buildroot}
 %{__install} -d %{buildroot}%{_prefix}
-%{__python} install.py install --installdir %{buildroot}%{_prefix}
+%{__python} install.py install --dir %{buildroot}%{_prefix}
 
 %find_lang %{name} --with-gnome
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Name=%{title}
-Comment=%{summary}
-Exec=%{_bindir}/%{name} 
-Icon=%{name}
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=GNOME;Office;X-MandrivaLinux-Office-Publishing;
-EOF
-
-%__install -D -m 644 %{name}48.png %buildroot/%_liconsdir/%name.png
-%__install -D -m 644 %{name}32.png %buildroot/%_iconsdir/%name.png
-%__install -D -m 644 %{name}16.png %buildroot/%_miconsdir/%name.png
+desktop-file-install --vendor='' \
+	--dir %buildroot%_datadir/applications \
+	--remove-category='Application' \
+	--add-category='GNOME;GTK' \
+	%buildroot%_datadir/applications/*.desktop
 
 %post
 %{update_desktop_database}
@@ -68,18 +57,10 @@ EOF
 %files -f %{name}.lang
 %defattr(-, root, root)
 %doc ChangeLog COPYING README
-%doc %{_mandir}/man1/comicthumb.1*
-%doc %{_mandir}/man1/comix.1*
 %{_bindir}/comicthumb
 %{_bindir}/comix
+%{_datadir}/comix
+%{_mandir}/man1/*
 %{_datadir}/applications/*comix.desktop
-%{_datadir}/icons/hicolor/48x48/apps/comix.png
-%{_datadir}/pixmaps/comix.png
-%{_datadir}/pixmaps/comix/
-%{_iconsdir}/*/%name.png
-%{_iconsdir}/%name.png
-%{_datadir}/icons/hicolor/scalable/apps/%name.svg
-%dir %{_datadir}/mime
-%{_datadir}/mime/*
-
-
+%{_datadir}/icons/hicolor/*/*/*
+%{_datadir}/mime/packages/comix.xml
