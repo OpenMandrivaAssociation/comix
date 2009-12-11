@@ -1,16 +1,15 @@
 %define name comix
-%define version 4.0.3
+%define version 4.0.4
 %define summary Comic book viewer
 
 Summary: %summary
 Name: %name
 Version: %version
-Release: %mkrel 2
+Release: %mkrel 1
 License: GPLv2+
 Group: Office
 URL: http://comix.sourceforge.net/
 Source: http://downloads.sourceforge.net/comix/%name-%{version}.tar.gz
-Source1: %name-icons.tar.bz2
 Patch0: comix-4.0.0-disable-update-mime-db.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -25,7 +24,7 @@ Comix is a comic book viewer. It reads zip, rar, tar, tar.gz, and tar.bz2
 archives (often called .cbz, .cbr and .cbt) as well as normal image files.
 
 %prep
-%setup -q -n %{name}-%{version} -a1
+%setup -q -n %{name}-%{version} 
 %patch0 -p0
 
 %build
