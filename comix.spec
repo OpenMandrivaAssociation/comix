@@ -5,7 +5,7 @@
 Summary: %summary
 Name: %name
 Version: %version
-Release: %mkrel 1
+Release: %mkrel 2
 License: GPLv2+
 Group: Office
 URL: http://comix.sourceforge.net/
