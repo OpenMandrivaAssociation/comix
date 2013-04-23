@@ -1,19 +1,14 @@
-%define name comix
-%define version 4.0.4
-%define summary Comic book viewer
-
-Summary: %summary
-Name: %name
-Version: %version
-Release: %mkrel 2
+Summary: Comic book viewer
+Name:    comix
+Version: 4.0.4
+Release: 3
 License: GPLv2+
 Group: Office
 URL: http://comix.sourceforge.net/
 Source: http://downloads.sourceforge.net/comix/%name-%{version}.tar.gz
 Patch0: comix-4.0.0-disable-update-mime-db.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
-Buildarch: noarch
+BuildArch: noarch
 BuildRequires: python, python-imaging, jpeg-progs, pygtk2.0
 BuildRequires: desktop-file-utils
 Requires: python, python-imaging, jpeg-progs, pygtk2.0
@@ -30,7 +25,6 @@ archives (often called .cbz, .cbr and .cbt) as well as normal image files.
 %build
 
 %install
-%{__rm} -rf %{buildroot}
 %{__install} -d %{buildroot}%{_prefix}
 %{__python} install.py install --dir %{buildroot}%{_prefix}
 
@@ -41,17 +35,6 @@ desktop-file-install --vendor='' \
 	--remove-category='Application' \
 	--add-category='GNOME;GTK' \
 	%buildroot%_datadir/applications/*.desktop
-
-%post
-%{update_desktop_database}
-%{update_mime_database}
-
-%postun
-%{clean_desktop_database}
-%{clean_mime_database}
-
-%clean
-%{__rm} -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-, root, root)
