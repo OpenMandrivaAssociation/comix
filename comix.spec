@@ -4,7 +4,7 @@ Version: 4.0.4
 Release: 4
 License: GPLv2+
 Group:   Office
-URL:     http://comix.sourceforge.net/
+URL:     https://comix.sourceforge.net/
 Source:  http://downloads.sourceforge.net/comix/%{name}-%{version}.tar.gz
 Patch0:  comix-4.0.0-disable-update-mime-db.patch
 Patch2:  comix-4.0.4-import-PIL-for-Image.patch
